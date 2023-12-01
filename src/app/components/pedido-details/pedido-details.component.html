@@ -1,0 +1,92 @@
+<div *ngIf="viewMode; else editable">
+    <div *ngIf="currentPedido.id">
+      <h4>Pedido</h4>
+      <div>
+        <label><strong>nomeCliente:</strong></label> {{ currentPedido.nomeCliente }}
+      </div>
+      <div>
+        <label><strong>emailCliente:</strong></label>
+        {{ currentPedido.emailCliente }}
+      </div>
+      <div>
+        <label><strong>Pago:</strong></label>
+        {{ currentPedido.pago ? "Pago" : "Pendente" }}
+      </div>
+  
+      <a class="badge badge-warning"
+        routerLink="/pedido/{{ currentPedido.id }}">
+        Edit
+      </a>
+    </div>
+  
+    <div *ngIf="!currentPedido">
+      <br />
+      <p>Please click on a Pedido...</p>
+    </div>
+  </div>
+  
+  <ng-template #editable>
+    <div *ngIf="currentPedido.id" class="edit-form">
+      <h4>Pedido</h4>
+      <form>
+        <div class="form-group">
+          <label for="nomeCliente">nomeCliente</label>
+          <input
+            type="text"
+            class="form-control"
+            id="nomeCliente"
+            [(ngModel)]="currentPedido.nomeCliente"
+            name="nomeCliente"
+          />
+        </div>
+        <div class="form-group">
+          <label for="emailCliente">emailCliente</label>
+          <input
+            type="text"
+            class="form-control"
+            id="emailCliente"
+            [(ngModel)]="currentPedido.emailCliente"
+            name="emailCliente"
+          />
+        </div>
+  
+        <div class="form-group">
+          <label><strong>Pago:</strong></label>
+          {{ currentPedido.pago ? "Pago" : "Pendente" }}
+        </div>
+      </form>
+  
+      <button
+        class="badge badge-primary mr-2"
+        *ngIf="currentPedido.pago"
+        (click)="updatePago(false)"
+      >
+        UnPublish
+      </button>
+      <button
+        *ngIf="!currentPedido.pago"
+        class="badge badge-primary mr-2"
+        (click)="updatePago(true)"
+      >
+        Publish
+      </button>
+  
+      <button class="badge badge-danger mr-2" (click)="deletePedido()">
+        Delete
+      </button>
+  
+      <button
+        type="submit"
+        class="badge badge-success mb-2"
+        (click)="updatePedido()"
+      >
+        Update
+      </button>
+      <p>{{ message }}</p>
+    </div>
+  
+    <div *ngIf="!currentPedido.id">
+      <br />
+      <p>Cannot access this Pedido...</p>
+    </div>
+  </ng-template>

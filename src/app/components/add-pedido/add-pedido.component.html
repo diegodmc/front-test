@@ -1,0 +1,92 @@
+<div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <div *ngIf="!submitted">
+          <div class="form-group">
+            <label for="nomeCliente">Nome</label>
+            <input
+              type="text"
+              class="form-control"
+              id="nomeCliente"
+              required
+              [(ngModel)]="pedido.nomeCliente"
+              name="nomeCliente"
+            />
+          </div>
+  
+          <div class="form-group">
+            <label for="emailCliente">Email</label>
+            <input
+              class="form-control"
+              id="emailCliente"
+              required
+              [(ngModel)]="pedido.emailCliente"
+              name="emailCliente"
+            />
+          </div>
+  
+          <div class="form-group">
+            <input
+              type="checkbox"
+              id="pago"
+              [(ngModel)]="pedido.pago"
+              name="pago"
+            />
+            <label for="pago" style="margin-left: 8px; margin-top: 8px;">Pago</label>
+          </div>
+  
+          <div class="form-group">
+            <label for="produtoSelecionado">Selecione um Produto</label>
+            <select
+              class="form-control"
+              id="produtoSelecionado"
+              [(ngModel)]="produtoSelecionado"
+              name="produtoSelecionado"
+            >
+              <option *ngFor="let produto of produtos" [value]="produto.id">
+                {{ produto.nomeProduto }}
+              </option>
+            </select>
+          </div>
+  
+          <label for="quantidade">Quantidade</label>
+          <input
+            type="number"
+            class="form-control"
+            id="quantidade"
+            [(ngModel)]="novoItem.quantidade"
+            name="quantidade"
+          />
+  
+          <br />
+          <button (click)="addNovoItem()" class="btn btn-primary">Adicionar Item</button>
+          
+        </div>
+      </div>
+  
+      <div class="col-md-6" *ngIf="!submitted">
+        <div *ngFor="let item of pedido.lista; let i = index" class="item-lista">
+            
+          <div class="item-info" >
+            <p><strong>Produto:</strong> {{ item.nomeProduto }}</p>
+            <p><strong>Quantidade:</strong> {{ item.quantidade }}</p>
+            <p><strong>Valor Unitário:</strong> {{ item.valorUnitario }}</p>
+          </div>
+          <div class="item-actions">
+            <button class="btn btn-danger" (click)="removerItem(i)">
+              <i class="fa fa-trash"></i> Excluir
+            </button>
+          </div>
+        
+        </div>
+      </div>
+    </div>
+    <br />
+    <br />
+    <button (click)="savePedido()" *ngIf="!submitted" class="btn btn-success" >Adicionar Pedido</button>
+    <div *ngIf="submitted">
+      <h4>Pedido foi enviado com sucesso!</h4>
+      <button class="btn btn-success" (click)="newPedido()">Adicionar Pedido</button>
+    </div>
+  </div>
+  
